@@ -1,5 +1,7 @@
 # umd-course-vis
 
+Recursively visualize a graph of prerequisites for any course offered at UMD
+
 ## Getting Started
 
 1. Have Node.js and npm installed
