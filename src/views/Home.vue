@@ -1,18 +1,20 @@
 <template>
-  <div>
-    <form v-on:submit.prevent="onSubmit">
+  <div class="home">
+
+    <form class="form" v-on:submit.prevent="onSubmit">
       <label for="course">I want to take </label>
-      <input class="uppercase" type="text" autofocus="autofocus" name="Course ID" v-model="targetCourseId" size="8" maxlength="8">
-      <input type="button" v-on:click="onSubmit" value="View Graph">
+      <input class="uppercase" type="text" autofocus="autofocus" name="Course ID" v-model="targetCourseId" size="7" maxlength="7">
     </form>
-    <svg>
+    
+    <d3-network ref='net' :net-nodes="nodes" :net-links="links" :options="options" :link-cb="lcb" />
+
+    <svg width="0" height="0">
       <defs>
         <marker id="m-end" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
           <path d="M0,0 L0,6 L9,3 z"></path>
         </marker>
       </defs>
     </svg>
-    <d3-network ref='net' :net-nodes="nodes" :net-links="links" :options="options" :link-cb="lcb" />
   </div>
 </template>
 
@@ -46,6 +48,7 @@ export default {
     onSubmit() {
       this.targetCourseId = this.targetCourseId.toUpperCase();
       // reset graph
+      this.uniqueNodes;
       this.uniqueNodes = {
         [this.targetCourseId]: true
       };
@@ -65,11 +68,11 @@ export default {
       axios
         .get(`https://api.umd.io/v0/courses/${course_id}`)
         .then(res => {
-          const hasPrereqs = res.data.relationships.prereqs ? true : false;
-          if (hasPrereqs) {
-            const parsePrereqs = str => str.match(/[A-Z]{4}[0-9]{3}[A-Z]?/g);
-            let prereqs = parsePrereqs(res.data.relationships.prereqs);
-
+          const parsePrereqs = str => str.match(/[A-Z]{4}[0-9]{3}[A-Z]?/g);
+          const prereqs = res.data.relationships.prereqs
+            ? parsePrereqs(res.data.relationships.prereqs)
+            : null;
+          if (prereqs != null) {
             // if course lists itself as a prereq then remove it
             let indexOfCourseItself = prereqs.indexOf(course_id);
             if (indexOfCourseItself > -1) {
@@ -111,11 +114,9 @@ export default {
 </script>
 
 <style>
-html {
-  background-color: #fff7f7;
-  font-family: monospace;
-  font-weight: bold;
-  font-size: 16px;
+.form {
+  margin-top: 48px;
+  text-align: center;
 }
 
 .uppercase {
@@ -129,5 +130,16 @@ html {
 #m-end {
   margin: 10px;
   fill: #d1caca;
+}
+
+input[type="text"] {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 3px dotted black;
+
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
 }
 </style>
