@@ -1,5 +1,7 @@
 # umd-course-vis
 
+![Screenshots](screenshot.png)
+
 Recursively visualize a graph of prerequisites for any course offered at UMD
 
 ## Getting Started

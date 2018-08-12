@@ -4,8 +4,9 @@
     <form class="form" v-on:submit.prevent="onSubmit">
       <label for="course">I want to take </label>
       <input class="uppercase" type="text" autofocus="autofocus" name="Course ID" v-model="targetCourseId" size="7" maxlength="7">
+      <input type="submit" value="==>">
     </form>
-    
+
     <d3-network ref='net' :net-nodes="nodes" :net-links="links" :options="options" :link-cb="lcb" />
 
     <svg width="0" height="0">
@@ -26,7 +27,8 @@ export default {
   name: "home",
   data() {
     return {
-      targetCourseId: "CMSC451",
+      noPrereqs: false,
+      targetCourseId: "CMSC216",
       uniqueNodes: {}, // "CMSC216": true
       nodes: [], // {id: "CMSC216", name: "CMSC216"}
       links: [], // {sid: "CMSC132", tid: "CMSC216"}
@@ -113,7 +115,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .form {
   margin-top: 48px;
   text-align: center;
@@ -136,8 +138,26 @@ input[type="text"] {
   border: 0;
   outline: 0;
   background: transparent;
-  border-bottom: 3px dotted black;
+  border-bottom: 3px solid black;
 
+  &:focus {
+    border-bottom: 3px solid rgb(224, 58, 62);
+  }
+}
+
+input[type="submit"] {
+  margin-left: 12px;
+  border: 3px solid black;
+  outline: 0;
+  background: transparent;
+
+  &:hover {
+    border: 3px solid rgb(224, 58, 62);
+    color: rgb(224, 58, 62);
+  }
+}
+
+input {
   font-family: inherit;
   font-weight: inherit;
   font-size: inherit;
