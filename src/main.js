@@ -3,12 +3,10 @@ import App from "./App.vue";
 import router from "./router";
 import "./registerServiceWorker";
 
-import Autocomplete from "v-autocomplete";
+import VueGitHubCorners from "vue-gh-corners";
+import "vue-gh-corners/dist/vue-github-corners.css";
 
-// You need a specific loader for CSS files like https://github.com/webpack/css-loader
-import "v-autocomplete/dist/v-autocomplete.css";
-
-Vue.use(Autocomplete);
+Vue.use(VueGitHubCorners);
 
 Vue.config.productionTip = false;
 
