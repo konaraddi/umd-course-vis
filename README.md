@@ -14,6 +14,6 @@ Recursively visualize a graph of prerequisites for any course offered at UMD
 
 ## Built With
 
-- [Vue.js](https://vuejs.org) for easy, quick front end development
+- [Vue.js](https://vuejs.org) for quicker front end development
 - [umd.io](https://umd.io) to get course info
 - [D3 Network](https://github.com/emiliorizzo/vue-d3-network) to create the graph
