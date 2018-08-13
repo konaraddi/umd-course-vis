@@ -46,6 +46,9 @@ export default {
     D3Network
   },
   mounted() {
+    alert(
+      "This is not ready for use!\nPlease do not make a schedule based of this (yet)."
+    );
     this.onSubmit();
   },
   methods: {
