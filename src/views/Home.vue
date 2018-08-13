@@ -4,7 +4,8 @@
     <form class="form" v-on:submit.prevent="onSubmit">
       <label for="course">I want to take </label>
       <input class="uppercase" type="text" autofocus="autofocus" name="Course ID" v-model="targetCourseId" size="7" maxlength="7">
-      <input type="submit" value="==>">
+      <br><br>
+      <input type="submit" value="okie dokie">
     </form>
 
     <d3-network ref='net' :net-nodes="nodes" :net-links="links" :options="options" :link-cb="lcb" />
@@ -22,13 +23,14 @@
 <script>
 import axios from "axios";
 import D3Network from "vue-d3-network";
+import parsePrereqs from "../parsePrereqs";
 
 export default {
   name: "home",
   data() {
     return {
       noPrereqs: false,
-      targetCourseId: "CMSC216",
+      targetCourseId: this.$route.params.course_id || "CMSC216",
       uniqueNodes: {}, // "CMSC216": true
       nodes: [], // {id: "CMSC216", name: "CMSC216"}
       links: [], // {sid: "CMSC132", tid: "CMSC216"}
@@ -49,6 +51,10 @@ export default {
   methods: {
     onSubmit() {
       this.targetCourseId = this.targetCourseId.toUpperCase();
+      this.$router.push({
+        name: "home",
+        params: { course_id: this.targetCourseId }
+      });
       // reset graph
       this.uniqueNodes;
       this.uniqueNodes = {
@@ -70,10 +76,10 @@ export default {
       axios
         .get(`https://api.umd.io/v0/courses/${course_id}`)
         .then(res => {
-          const parsePrereqs = str => str.match(/[A-Z]{4}[0-9]{3}[A-Z]?/g);
           const prereqs = res.data.relationships.prereqs
-            ? parsePrereqs(res.data.relationships.prereqs)
+            ? parsePrereqs(res.data.relationships.prereqs).mustTake
             : null;
+          // handle the oneFromEach portion of prereqs (see parsePrereqs function and tests for details)
           if (prereqs != null) {
             // if course lists itself as a prereq then remove it
             let indexOfCourseItself = prereqs.indexOf(course_id);

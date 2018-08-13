@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <github-corners repo="konaraddi/umd-course-vis" bg-color="#e03a3e"></github-corners>
+    <github-corners repo="konaraddi/umd-course-vis"></github-corners>
     <router-view/>
   </div>
 </template>

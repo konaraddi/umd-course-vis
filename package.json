@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
+    "test": "jest",
     "deploy": "surge dist/ --domain='umd-course-vis.surge.sh'"
   },
   "dependencies": {

@@ -10,6 +10,10 @@ export default new Router({
   routes: [
     {
       path: "/",
+      redirect: "/cmsc216"
+    },
+    {
+      path: "/:course_id",
       name: "home",
       component: Home
     }
