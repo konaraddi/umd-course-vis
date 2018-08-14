@@ -79,18 +79,21 @@ export default {
       axios
         .get(`https://api.umd.io/v0/courses/${course_id}`)
         .then(res => {
-          const prereqs = res.data.relationships.prereqs
-            ? parsePrereqs(res.data.relationships.prereqs).mustTake
+          const prereqsAsString = res.data.relationships.prereqs;
+
+          const prereqs = prereqsAsString
+            ? parsePrereqs(prereqsAsString)
             : null;
+
           // handle the oneFromEach portion of prereqs (see parsePrereqs function and tests for details)
           if (prereqs != null) {
             // if course lists itself as a prereq then remove it
-            let indexOfCourseItself = prereqs.indexOf(course_id);
+            let indexOfCourseItself = prereqs.mustTake.indexOf(course_id);
             if (indexOfCourseItself > -1) {
-              prereqs.splice(indexOfCourseItself, 1);
+              prereqs.mustTake.splice(indexOfCourseItself, 1);
             }
 
-            prereqs.forEach(prereq => {
+            prereqs.mustTake.forEach(prereq => {
               if (!this.uniqueNodes[prereq]) {
                 this.uniqueNodes[prereq] = true;
                 this.nodes.push({
@@ -108,6 +111,29 @@ export default {
 
               this.recursivelyGetAllPrereqs(prereq);
             });
+
+            /*
+            prereqs.pickOneFromEach.forEach(set => {
+              set.forEach(prereq => {
+                if (!this.uniqueNodes[prereq]) {
+                  this.uniqueNodes[prereq] = true;
+                  this.nodes.push({
+                    id: prereq,
+                    name: prereq,
+                    _color: "#0984e3"
+                  });
+                }
+
+                this.links.push({
+                  sid: prereq,
+                  tid: course_id,
+                  _color: "#0984e3"
+                });
+
+                this.recursivelyGetAllPrereqs(prereq);
+              });
+            });
+            */
           }
         })
         .catch(err => {

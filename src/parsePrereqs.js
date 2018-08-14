@@ -9,6 +9,7 @@ function parsePrereqs(str) {
   };
 
   prereqs.mustTake = str.match(/[A-Z]{4}[0-9]{3}[A-Z]?/g);
+
   if (str.includes("from")) {
     const regex = /from \(([A-Z|0-9|,| ]*)\)/g;
     let pickOneFrom;
@@ -22,6 +23,10 @@ function parsePrereqs(str) {
         course => !prereqs.pickOneFromEach[i].includes(course)
       );
     }
+  }
+
+  if (prereqs.mustTake == null) {
+    prereqs.mustTake = [];
   }
 
   return prereqs;
