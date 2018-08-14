@@ -5,7 +5,7 @@
 - [ ] Handle and distinguish between failed requests, no prerequisites, and errors
 - [ ] Consider corequisites
 - [ ] Mention restrictions
-- [ ] Handle direct visits to links to the website where a course is appended to the link (e.g. handle a direct visit to https://umd-course-vis.surge.sh/CMSC330)
+- [x] Handle direct visits to links to the website where a course is appended to the link (e.g. handle a direct visit to https://umd-course-vis.surge.sh/CMSC330)
 - [ ] Add 200 and 400 page
 - [ ] Add paths to icons in `public/manifest.json`
 - [ ] Remove the submit button, render results after user stops typing
