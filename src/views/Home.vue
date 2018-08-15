@@ -8,7 +8,7 @@
       <input type="submit" value="okie dokie">
     </form>
 
-    <d3-network ref='net' :net-nodes="nodes" :net-links="links" :options="options" :link-cb="lcb" />
+    <d3-graph :nodes="nodes" :links="links"/>
 
     <div v-if="pickOneFromEach.length > 0">
       In addition to the above, pick one from <span v-if="pickOneFromEach.length > 1">each</span><span v-else>the</span> set below:
@@ -17,26 +17,18 @@
       </p>
     </div>
 
-    <svg width="0" height="0">
-      <defs>
-        <marker id="m-end" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-          <path d="M0,0 L0,6 L9,3 z"></path>
-        </marker>
-      </defs>
-    </svg>
-
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import D3Network from "vue-d3-network";
+import D3Graph from "../components/D3Graph.vue";
 import parsePrereqs from "../parsePrereqs";
 
 export default {
   name: "home",
   components: {
-    D3Network
+    D3Graph
   },
   data() {
     return {
@@ -45,17 +37,8 @@ export default {
       targetCourseId: this.$route.params.course_id || "CMSC216",
       uniqueNodes: {}, // "CMSC216": true
       nodes: [], // {id: "CMSC216", name: "CMSC216"}
-      links: [], // {sid: "CMSC132", tid: "CMSC216"}
-      options: {
-        force: 3000,
-        nodeSize: 20,
-        linkWidth: 2,
-        nodeLabels: true
-      }
+      links: [] // {sid: "CMSC132", tid: "CMSC216"}
     };
-  },
-  components: {
-    D3Network
   },
   mounted() {
     this.onSubmit();
@@ -130,6 +113,7 @@ export default {
           }
         })
         .catch(err => {
+          console.log("huh");
           console.log(err);
         });
     },
@@ -154,15 +138,6 @@ export default {
 
 .uppercase {
   text-transform: uppercase;
-}
-
-.node-label {
-  font-size: 1rem;
-}
-
-#m-end {
-  margin: 10px;
-  fill: #d1caca;
 }
 
 input[type="text"] {
