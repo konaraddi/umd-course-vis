@@ -3,7 +3,7 @@
 
     <form class="form" v-on:submit.prevent="onSubmit">
       <label for="course">I want to take </label>
-      <input class="uppercase" type="text" autofocus="autofocus" name="Course ID" v-model="targetCourseId" size="6" maxlength="7">
+      <input class="uppercase" type="text" autofocus="autofocus" name="Course ID" v-model="targetCourseId" size="7" maxlength="7">
       <br><br>
       <input type="submit" value="okie dokie">
     </form>
@@ -35,6 +35,9 @@ import parsePrereqs from "../parsePrereqs";
 
 export default {
   name: "home",
+  components: {
+    D3Network
+  },
   data() {
     return {
       baseUrl: window.location.protocol + "//" + window.location.host,
