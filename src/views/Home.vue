@@ -1,14 +1,21 @@
 <template>
-  <div class="home">
+  <div class="home has-text-centered">
 
     <form class="form" v-on:submit.prevent="onSubmit">
       <label for="course">I want to take </label>
-      <input class="uppercase" type="text" autofocus="autofocus" name="Course ID" v-model="targetCourseId" size="7" maxlength="7">
+      <input class="uppercase" type="text" autofocus="autofocus" name="Course ID" v-model="targetCourseId" size="6" maxlength="7">
       <br><br>
       <input type="submit" value="okie dokie">
     </form>
 
     <d3-network ref='net' :net-nodes="nodes" :net-links="links" :options="options" :link-cb="lcb" />
+
+    <div v-if="pickOneFromEach.length > 0">
+      In addition to the above, pick one from <span v-if="pickOneFromEach.length > 1">each</span><span v-else>the</span> set below:
+      <p v-for="(set, index) in pickOneFromEach" :key="index">
+        <a target="_blank" v-for="(course_id, i) in set" :href="baseUrl+'/#/'+course_id" :key="i">{{course_id}}<br></a>
+      </p>
+    </div>
 
     <svg width="0" height="0">
       <defs>
@@ -17,6 +24,7 @@
         </marker>
       </defs>
     </svg>
+
   </div>
 </template>
 
@@ -29,7 +37,8 @@ export default {
   name: "home",
   data() {
     return {
-      noPrereqs: false,
+      baseUrl: window.location.protocol + "//" + window.location.host,
+      pickOneFromEach: [],
       targetCourseId: this.$route.params.course_id || "CMSC216",
       uniqueNodes: {}, // "CMSC216": true
       nodes: [], // {id: "CMSC216", name: "CMSC216"}
@@ -46,9 +55,6 @@ export default {
     D3Network
   },
   mounted() {
-    alert(
-      "This is not ready for use!\nPlease do not make a schedule based of this (yet)."
-    );
     this.onSubmit();
   },
   methods: {
@@ -71,6 +77,7 @@ export default {
           _color: "#e03a3e"
         }
       ];
+      this.pickOneFromEach = [];
 
       this.recursivelyGetAllPrereqs(this.targetCourseId);
     },
@@ -112,28 +119,11 @@ export default {
               this.recursivelyGetAllPrereqs(prereq);
             });
 
-            /*
-            prereqs.pickOneFromEach.forEach(set => {
-              set.forEach(prereq => {
-                if (!this.uniqueNodes[prereq]) {
-                  this.uniqueNodes[prereq] = true;
-                  this.nodes.push({
-                    id: prereq,
-                    name: prereq,
-                    _color: "#0984e3"
-                  });
-                }
-
-                this.links.push({
-                  sid: prereq,
-                  tid: course_id,
-                  _color: "#0984e3"
-                });
-
-                this.recursivelyGetAllPrereqs(prereq);
+            if (course_id == this.targetCourseId) {
+              prereqs.pickOneFromEach.forEach(set => {
+                this.pickOneFromEach.push(set);
               });
-            });
-            */
+            }
           }
         })
         .catch(err => {
@@ -153,6 +143,9 @@ export default {
 <style lang="scss">
 .form {
   margin-top: 48px;
+}
+
+.has-text-centered {
   text-align: center;
 }
 

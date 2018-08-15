@@ -6,7 +6,7 @@ Recursively visualize a graph of prerequisites for any course offered at UMD
 
 ## How it works
 
-We're using the https://umd.io API to get course information. Unfortunately, the prerequisites are returned as a string like the below (for MATH403):
+We're using the https://umd.io API to get course information. The prerequisites are returned as a string like the below (for MATH403):
 
 ```
 1 course with a minimum grade of C- from (MATH240, MATH461, MATH340); and 1 course with a minimum grade of C- from (MATH341, MATH241); and minimum grade of C- in MATH310.
@@ -21,9 +21,7 @@ We parse the prerequisites using regex and place the courses in the `from (....)
 }
 ```
 
-...where `mustTake` consists of an array of all classes the student must take as a direct prerequisite. The `pickOneFromEach` is an array of arrays of classes. The student must take one class from each array (i.e. one class from each `from (....)` statement. So there are multiple ways to obtain all the prerequisites to MATH403.
-
-:warning: The graph no longer shows all courses from the `pickOneFromEach` because that's misleading. We're working on rendering multiple graphs to represent the multiple possibilities introduced by `pickOneFromEach`. :warning:
+...where `mustTake` consists of an array of all classes the student must take as a direct prerequisite. The `pickOneFromEach` is an array of arrays of classes. The student must take one class from each array (i.e. one class from each `from (....)` statement. So there are multiple ways to obtain all the prerequisites to MATH403. Each array is displayed as a set of links to it's own prerequisites. For an example, checkout the bottom of [https://umd-course-vis.surge.sh/#/MATH403](https://umd-course-vis.surge.sh/#/MATH403).
 
 Then we repeat the above steps for each course in the prereq object, recursively getting all the prerequisites, and use the [vue-d3-network](https://github.com/emiliorizzo/vue-d3-network) library to render a graph of the prerequisites.
 
