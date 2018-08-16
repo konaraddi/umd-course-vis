@@ -2,7 +2,9 @@
 
 ![Screenshots](screenshot.png)
 
-Recursively visualize a graph of prerequisites for any course offered at UMD
+Recursively visualize a graph of prerequisites for any course offered at UMD.
+
+Examples: [CMSC132](https://umd-course-vis.surge.sh/#/CMSC132) | [CMSC250](https://umd-course-vis.surge.sh/#/CMSC250) | [CMSC330](https://umd-course-vis.surge.sh/#/CMSC330) | [CMSC420](https://umd-course-vis.surge.sh/#/CMSC420)
 
 ## How it works
 
