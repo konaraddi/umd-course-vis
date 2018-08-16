@@ -37,12 +37,6 @@ Here's the [parsePrereqs](./src/parsePrereqs.js) function and here's [the tests 
 4. `npm i` to install all dependencies
 5. `npm run serve` and visit `http://localhost:8080` in your browser
 
-### Deploying
-
-1. Checkout Surge.sh then add a CNAME, with your domain, in `public/`
-2. `npm run build` to build the files for distribution (placed in `dist/`)
-3. `npm run deploy` will deploy whatever is in the `dist/` folder
-
 ## Built With
 
 - [Vue.js](https://vuejs.org) for quicker front end development
