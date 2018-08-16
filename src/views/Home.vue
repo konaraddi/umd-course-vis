@@ -151,6 +151,8 @@ export default {
 </script>
 
 <style lang="scss">
+$red: rgb(224, 58, 62);
+
 .form {
   margin-top: 48px;
 }
@@ -170,7 +172,7 @@ input[type="text"] {
   border-bottom: 3px solid black;
 
   &:focus {
-    border-bottom: 3px solid rgb(224, 58, 62);
+    border-bottom: 3px solid $red;
   }
 }
 
@@ -181,8 +183,8 @@ input[type="submit"] {
   background: transparent;
 
   &:hover {
-    border: 3px solid rgb(224, 58, 62);
-    color: rgb(224, 58, 62);
+    border: 3px solid $red;
+    color: $red;
   }
 }
 
