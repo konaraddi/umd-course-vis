@@ -11,6 +11,7 @@ html {
   font-family: monospace;
   font-weight: bold;
   font-size: 16px;
+  line-height: 1.5rem;
 }
 
 body {

@@ -40,7 +40,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .node-label {
   font-size: 1rem;
 }
